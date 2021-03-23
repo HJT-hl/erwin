@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 export const config = {
     funReg : /^set/,
     private: false
@@ -11,7 +11,7 @@ export const observe = (state,options = config ) =>{
         const length = reflashQueue.length;
         for(let i=0;i<length;i++){
             const [r,reflash] = reflashQueue.shift();
-            reflash(r+1 >= Number.MAX_SAFE_INTEGER - 9999 ? 0 : r + 1);
+            reflash(r+1);
         }
     }
     const stateProxy = new Proxy(state,{
@@ -41,7 +41,13 @@ export const observe = (state,options = config ) =>{
         }
     })
     return ()=>{
-        reflashQueue.push(useState(0))
+        const state = useState(0)
+        reflashQueue.push(state)
+        useEffect(()=>{
+            return ()=>{
+                reflashQueue.splice(reflashQueue.findIndex(item=>state===item),1);
+            }
+        })
         return stateProxy
     }
 }
