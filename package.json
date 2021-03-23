@@ -1,13 +1,13 @@
 {
   "name": "erwin",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "author": "siluxianren",
-  "main": "src/utils.js",
-  "module": "src/utils.js",
+  "main": "example/src/utils.js",
+  "module": "example/src/utils.js",
   "license": "MIT",
   "description": "react global state management",
   "files": [
-    "src/utils.js"
+    "example/src/utils.js"
   ],
   "keywords": [
     "react",

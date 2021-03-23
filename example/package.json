@@ -1,6 +1,6 @@
 {
   "name": "erwin",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "author": "siluxianren",
   "main": "example/src/utils.js",
   "module": "example/src/utils.js",
