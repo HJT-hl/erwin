@@ -1,14 +1,15 @@
-import {observe} from './utils';
-
+import {observe,config} from './utils';
+config.private = true;
+config.funReg = /^set/;
 const countState = observe({
   count : 0,
-  addCount(){
-    setTimeout(()=>this.count++,0)
+  addCount(value){
+    console.log(value);
+    setTimeout(()=>  this.count += value,0)
     
   }
 },{
-  funReg: /^add/,
-  private : true,
+  funReg : /^add/
 })
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
 
 const AddBtn = ()=>{
   const c = countState();
-  return <button onClick={()=>c.addCount()}> add </button>
+  return <button onClick={()=>c.addCount(1000)}> add </button>
 } 
 
 export default App;
