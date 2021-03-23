@@ -1,0 +1,46 @@
+import {useState} from 'react';
+export const config = {
+    funReg : /^set/,
+    private: false
+}
+export const observe = (state,options = config ) =>{
+    if(options.funReg === undefined) options.funReg = config.funReg;
+    if(!options.private === undefined) options.private = config.private;
+    const reflashQueue = [];
+    const renderNode = ()=>{
+        const length = reflashQueue.length;
+        for(let i=0;i<length;i++){
+            const [r,reflash] = reflashQueue.shift();
+            reflash(r+1);
+        }
+    }
+    const stateProxy = new Proxy(state,{
+        get(target,key){
+            if(key.match(options.funReg) && options.private) {
+                const privateFun = ()=>{
+                    target[key].call(new Proxy(state,{
+                        set(target,key,value){
+                            target[key] = value;
+                            renderNode();
+                            return true;
+                        }
+                    },...arguments))
+                }
+                return privateFun;
+            }
+            return target[key]
+        },
+        set(target,key,value){
+            console.log(222);
+            if(options.private) return false;
+            if(key.match(options.funReg)) return false;
+            target[key] = value;
+            renderNode()
+            return true;
+        }
+    })
+    return ()=>{
+        reflashQueue.push(useState(0))
+        return stateProxy
+    }
+}
