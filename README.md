@@ -28,7 +28,10 @@ const stateModel = observe({
   count : 0
 })
 function App() {
-    const state = stateModel('App'); // 这里传一个每个组件都不一样的key,一般拿组件名即可。同一个组件不同的 model 可以使用同一个 key
+    // 这里传一个每个组件都不一样的key,一般拿组件名即可。
+    // 这个 key 要求每次组件更新后，key 都相同。
+    // 同一个组件不同的 model 可以使用同一个 key
+    const state = stateModel('App'); 
     return (
     <div>
       {state.count}
@@ -140,6 +143,7 @@ const AddBtn = ()=>{
 ```
 
 lazy
+
 描述 : 当 lazy 为 true 时，要更新的 state 与之前的 state 相同时组件不刷新。
 
 类型 ： boolean
@@ -168,5 +172,7 @@ const stateModel = observe({
  });
 ```
 
+实现原理 ：
 
+[https://juejin.cn/post/6943037879778017287]: https://juejin.cn/post/6943037879778017287
 
