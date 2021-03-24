@@ -1,26 +1,26 @@
 import {useState,useEffect} from 'react';
 export const config = {
     funReg : /^set/,
-    private: false
+    private: false,
+    lazy : true,
 }
 export const observe = (state,options = config ) =>{
     if(options.funReg === undefined) options.funReg = config.funReg;
     if(options.private === undefined) options.private = config.private;
-    const reflashQueue = [];
+    if(options.lazy === undefined) options.lazy = config.lazy;
+    const reRenderMap = new Map();
     const renderNode = ()=>{
-        const length = reflashQueue.length;
-        for(let i=0;i<length;i++){
-            const [r,reflash] = reflashQueue.shift();
-            reflash(r+1);
+        for (var reRenderFun of reRenderMap.values()) {
+            reRenderFun();
         }
     }
     const stateProxy = new Proxy(state,{
         get(target,key){
             if(key.match(options.funReg) && options.private) {
                 const privateFun = (...arg)=>{
-                    
                     target[key].apply(new Proxy(state,{
                         set(target,key,value){
+                            if(options.lazy && target[key] === value) return true;
                             target[key] = value;
                             renderNode();
                             return true;
@@ -35,19 +35,20 @@ export const observe = (state,options = config ) =>{
         set(target,key,value){
             if(options.private) return false;
             if(key.match(options.funReg)) return false;
+            if(options.lazy && target[key] === value) return true;
             target[key] = value;
             renderNode()
             return true;
         }
     })
-    return ()=>{
-        const state = useState(0)
-        reflashQueue.push(state)
+    return (key)=>{
+        const [r,reflash] = useState(0)
+        reRenderMap.set(key,()=>reflash(r+1))
         useEffect(()=>{
             return ()=>{
-                reflashQueue.splice(reflashQueue.findIndex(item=>state===item),1);
+                reRenderMap.set(key,()=>{});
             }
-        })
+        },[])
         return stateProxy
     }
 }

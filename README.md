@@ -28,7 +28,7 @@ const stateModel = observe({
   count : 0
 })
 function App() {
-    const state = stateModel()
+    const state = stateModel('App'); // 这里传一个每个组件都不一样的key,一般拿组件名即可。同一个组件不同的 model 可以使用同一个 key
     return (
     <div>
       {state.count}
@@ -37,7 +37,7 @@ function App() {
     );
 }
 const AddBtn = ()=>{
-    const state = stateModel()
+    const state = stateModel('AddBtn') 
     return <button onClick={()=>state.count++}>add count</button>
 }
 
@@ -54,7 +54,7 @@ const stateModel = observe({
     }
 })
 function App() {
-    const state = stateModel()
+    const state = stateModel('App')
     return (
     <div>
       {state.count}
@@ -63,7 +63,7 @@ function App() {
     );
 }
 const AddBtn = ()=>{
-    const state = stateModel()
+    const state = stateModel('AddBtn')
     return <button onClick={()=>state.setCount()}>add count</button>
 }
 ```
@@ -100,7 +100,7 @@ const stateModel = observe({
 });
 
 const AddBtn = ()=>{
-    const state = stateModel()
+    const state = stateModel('AddBtn')
     state.addCount = ()=>{} // error : 错误被匹配的函数无法被更改。
     return <button onClick={()=>state.addCount()}>add count</button>
 }
@@ -129,15 +129,23 @@ const stateModel = observe({
 });
 
 const AddBtn = ()=>{
-    const state = stateModel()
+    const state = stateModel('AddBtn')
     const onClick = ()=>{
         state.count++; // error : 错误，无法更改数据
-        // 只能通过一下方式更改。
+        // 只能通过以下方式更改。
         state.addCount();
     }
     return <button onClick={onClick}>add count</button>
 }
 ```
+
+lazy
+描述 : 当 lazy 为 true 时，要更新的 state 与之前的 state 相同时组件不刷新。
+
+类型 ： boolean
+
+默认 ： true
+
 
 ## config 对象
 
@@ -155,7 +163,8 @@ const stateModel = observe({
         this.count ++;
     }
 },{
-    funReg : /^add/   // 此处的 funReg 优先级跟高
+    funReg : /^add/,   // 此处的 funReg 优先级跟高
+    lazy : false
  });
 ```
 
