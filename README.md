@@ -172,7 +172,5 @@ const stateModel = observe({
  });
 ```
 
-实现原理 ：
-
-[https://juejin.cn/post/6943037879778017287]: https://juejin.cn/post/6943037879778017287	"https://juejin.cn/post/6943037879778017287"
+实现原理 ：[https://juejin.cn/post/6943037879778017287](https://juejin.cn/post/6943037879778017287)
 
