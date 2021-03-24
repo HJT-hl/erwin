@@ -5,7 +5,7 @@ config.funReg = /^set/;
 const countState = observe({
   count : 0,
   addCount(){
-    setTimeout(()=>  this.count = 1,0)
+    setTimeout(()=>  this.count += 1,0)
   }
 },{
   funReg : /^add/,
@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       {c.count}
       <AddBtn/>
-      {/* {c.count %2 ?<Show/>:null  } */}
+      {c.count %2 ?<Show/>:null  }
     </div>
   );
 }
