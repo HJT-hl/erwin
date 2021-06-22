@@ -8,13 +8,13 @@
   "typings": "type.d.ts",
   "description": "react global state management",
   "files": [
-    "index.js"
+    "index.js",
+    "type.d.ts"
   ],
   "scripts": {
     "updatemin": "npm version minor",
     "updatemajor": "npm version major",
-    "updatepatch": "npm version patch",
-    "publish": "npm publish"
+    "updatepatch": "npm version patch"
   },
   "keywords": [
     "react",
