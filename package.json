@@ -1,6 +1,6 @@
 {
   "name": "erwin",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "siluxianren",
   "main": "index.js",
   "module": "index.js",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "updatemin": "npm version minor",
-    "updatemajor" : "npm version major",
+    "updatemajor": "npm version major",
     "updatepatch": "npm version patch",
     "publish": "npm publish"
   },
