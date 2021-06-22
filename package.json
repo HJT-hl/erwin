@@ -1,6 +1,6 @@
 {
   "name": "erwin",
-  "version": "1.2.0",
+  "version": "1.1.0",
   "author": "siluxianren",
   "main": "index.js",
   "module": "index.js",
@@ -11,7 +11,10 @@
     "index.js"
   ],
   "scripts": {
-    "update": "npm version minor"
+    "updatemin": "npm version minor",
+    "updatepatch" : "npm version patch",
+    "prepatch" : "git add .",
+    "publish": "npm publish"
   },
   "keywords": [
     "react",
