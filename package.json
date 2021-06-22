@@ -1,11 +1,11 @@
 {
   "name": "erwin",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "siluxianren",
   "main": "index.js",
   "module": "index.js",
   "license": "MIT",
-  "typings" : "type.d.ts",
+  "typings": "type.d.ts",
   "description": "react global state management",
   "files": [
     "index.js"
