@@ -8,12 +8,15 @@ export const observe = (state,options = config ) =>{
     if(options.funReg === undefined) options.funReg = config.funReg;
     if(options.private === undefined) options.private = config.private;
     if(options.lazy === undefined) options.lazy = config.lazy;
+    
     const reRenderMap = new Map();
+
     const renderNode = ()=>{
         for (var reRenderFun of reRenderMap.values()) {
             reRenderFun();
         }
     }
+
     const stateProxy = new Proxy(state,{
         get(target,key){
             if(key.match(options.funReg) && options.private) {
@@ -41,9 +44,10 @@ export const observe = (state,options = config ) =>{
             return true;
         }
     })
+
     return (key)=>{
         const [r,reflash] = useState(0)
-        reRenderMap.set(key,()=>reflash(r+1))
+        reRenderMap.set(key,()=>reflash(r + 1 ))
         useEffect(()=>{
             return ()=>{
                 reRenderMap.set(key,()=>{});

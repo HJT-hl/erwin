@@ -158,10 +158,10 @@ lazy
 dome : 
 
 ```js
-import {observe,config} from 'erwin';
-config.private = true;
-config.funReg = /^set/;
-const stateModel = observe({
+import erwin from 'erwin';
+erwin.config.private = true;
+erwin.config.funReg = /^set/;
+const stateModel = erwin.observe({
   	count : 0,
     addCount(){
         this.count ++;
